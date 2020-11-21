@@ -1,0 +1,31 @@
+{
+  "name": "poetry-server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:forwen1001nights/poetry-server.git",
+  "author": "bobby <981277642@qq.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "start": "ts-node index.ts"
+  },
+  "dependencies": {
+    "apollo-server-koa": "^2.19.0",
+    "dotenv": "^8.2.0",
+    "graphql": "^15.4.0",
+    "koa": "^2.13.0",
+    "lodash": "^4.17.20",
+    "mysql2": "^2.2.5",
+    "reflect-metadata": "^0.1.13",
+    "sequelize": "5",
+    "sequelize-typescript": "^1.1.0"
+  },
+  "devDependencies": {
+    "@types/graphql": "^14.5.0",
+    "@types/koa": "^2.11.6",
+    "@types/node": "^14.14.7",
+    "@types/sequelize": "^4.28.9",
+    "ts-node": "^9.0.0",
+    "typescript": "^4.0.5"
+  }
+}
