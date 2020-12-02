@@ -1,4 +1,6 @@
-import { Table, Column, Model, PrimaryKey, AutoIncrement, DataType } from 'sequelize-typescript'
+import { Table, Column, Model, PrimaryKey, AutoIncrement, DataType, ForeignKey, BelongsTo } from 'sequelize-typescript'
+import { Poet } from './Poet'
+
 
 @Table({
   tableName: 'poem'
@@ -22,4 +24,11 @@ export class Poem extends Model<Poem> {
 
   @Column
   created: Date
+
+  @ForeignKey(() => Poet)
+  @Column
+  author_id: number;
+
+  @BelongsTo(() => Poet)
+  poet: Poet
 }

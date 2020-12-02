@@ -8,6 +8,7 @@ const typeDef = gql`
     author: String!
     Article: String!
     created: Date
+    author_id: Int!
   }
 
   extend type Query {
@@ -23,11 +24,15 @@ const resolver: IResolverObject<any, graphContext> = {
       return models.Poem.findByPk(id)
     },
     poems: ({}={}, { author }, { models }) => {
-      return models.Poem.findAll({
-        where: {
-          author
-        }
-      })
+      if (author) {
+        return models.Poem.findAll({
+          where: {
+            author
+          }
+        })
+      } else {
+        return models.Poem.findAll()
+      }
     }
   }
 }
