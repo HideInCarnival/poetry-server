@@ -6,14 +6,24 @@ const typeDef = gql`
     id: ID!
     title: String!
     author: String!
-    Article: String!
+    article: String!
     created: Date
     author_id: Int!
+  }
+
+  type PoemRow {
+    dataValues: Poem
+  }
+
+  type PoemPage {
+    count: Int
+    rows: [PoemRow]
   }
 
   extend type Query {
     poem (id: ID): Poem
     poems (author: String): [Poem!]
+    poemsByPage (author: String, offset: Int!, limit: Int!): PoemPage
   }
 `
 
@@ -28,10 +38,26 @@ const resolver: IResolverObject<any, graphContext> = {
         return models.Poem.findAll({
           where: {
             author
-          }
+          },
         })
       } else {
         return models.Poem.findAll()
+      }
+    },
+    poemsByPage: ({}={}, { author, offset, limit }, { models }) => {
+      if (author) {
+        return models.Poem.findAndCountAll({
+          where: {
+            author
+          },
+          offset,
+          limit
+        })
+      } else {
+        return models.Poem.findAndCountAll({
+          offset,
+          limit
+        })
       }
     }
   }

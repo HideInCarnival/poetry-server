@@ -9,9 +9,19 @@ const typeDef = gql`
     nationality: String!
   }
 
+  type PoetRow {
+    dataValues: Poet
+  }
+
+  type PoetPage {
+    count: Int
+    rows: [PoetRow]
+  }
+
   extend type Query {
     poet (id: ID): Poet
     poets (nationality: String): [Poet]
+    poetsByPage (nationality: String, offset: Int!, limit: Int!): PoetPage
   }
 `
 
@@ -29,6 +39,22 @@ const resolver:IResolverObject<any, graphContext> = {
         })
       } else {
         return models.Poet.findAll()
+      }
+    },
+    poetsByPage: ({}={}, { nationality, offset, limit }, { models }) => {
+      if (nationality) {
+        return models.Poet.findAndCountAll({
+          where: {
+            nationality
+          },
+          offset,
+          limit
+        })
+      } else {
+        return models.Poet.findAndCountAll({
+          offset,
+          limit
+        })
       }
     }
   }
