@@ -1,6 +1,6 @@
 import {  gql, IResolverObject } from 'apollo-server-koa'
 import { graphContext } from '../../type' 
-
+import { Op } from 'sequelize'
 const typeDef = gql`
   type Poem {
     id: ID!
@@ -24,6 +24,7 @@ const typeDef = gql`
     poem (id: ID): Poem
     poems (author: String): [Poem!]
     poemsByPage (author: String, offset: Int!, limit: Int!): PoemPage
+    poemLike (title: String!): [Poem]
   }
 `
 
@@ -59,6 +60,15 @@ const resolver: IResolverObject<any, graphContext> = {
           limit
         })
       }
+    },
+    poemLike: ({}={}, { title }, { models }) => {
+      return models.Poem.findAll({
+        where: {
+          title: {
+            [Op.substring]: title
+          }
+        }
+      })
     }
   }
 }
