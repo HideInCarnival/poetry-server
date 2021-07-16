@@ -1,12 +1,10 @@
 FROM node:14-alpine
 
-RUN mkdir -p /home/poetry-s
+ADD . /app/
 
-WORKDIR /home/poetry-s
+WORKDIR /app
 
-COPY . /home/poetry-s/
-
-RUN npm install
+RUN yarn install
 
 EXPOSE 4000
 
