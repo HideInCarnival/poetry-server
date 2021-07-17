@@ -4,8 +4,8 @@ ADD . /app/
 
 WORKDIR /app
 
-RUN npm install
+RUN yarn install
 
 EXPOSE 4000
 
-CMD [ "npm", "start"]
+CMD [ "yarn", "start"]
